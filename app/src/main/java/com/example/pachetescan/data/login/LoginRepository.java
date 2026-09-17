@@ -1,6 +1,14 @@
-package com.example.pachetescan.data;
+package com.example.pachetescan.data.login;
 
-import com.example.pachetescan.data.model.LoggedInUser;
+import android.os.Handler;
+import android.os.Looper;
+
+import com.example.pachetescan.data.Result;
+import com.example.pachetescan.data.login.model.LoggedInUser;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -11,6 +19,9 @@ public class LoginRepository {
     private static volatile LoginRepository instance;
 
     private LoginDataSource dataSource;
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
@@ -43,12 +54,27 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
-        // handle login
-        Result<LoggedInUser> result = dataSource.login(username, password);
-        if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-        }
-        return result;
+    public interface LoginRepositoryCallback {
+        void onResult(Result<LoggedInUser> result);
+    }
+
+    public void login(String username, String password, LoginRepositoryCallback callback) {
+        executor.execute(() -> {
+            Result<LoggedInUser> result;
+
+            try {
+                result = dataSource.login(username, password);
+
+                if (result instanceof Result.Success) {
+                    setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
+                }
+
+            } catch (Exception e) {
+                result = new Result.Error(new IOException("Unexpected error during login", e));
+            }
+
+            Result<LoggedInUser> finalResult = result;
+            mainHandler.post(() -> callback.onResult(finalResult));
+        });
     }
 }

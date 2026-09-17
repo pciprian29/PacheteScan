@@ -29,8 +29,8 @@ import android.widget.Toast;
 
 import com.example.pachetescan.MenuActivity;
 import com.example.pachetescan.R;
-import com.example.pachetescan.ui.login.LoginViewModel;
-import com.example.pachetescan.ui.login.LoginViewModelFactory;
+import com.example.pachetescan.data.TokenStorage;
+
 import com.example.pachetescan.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory(getApplicationContext()))
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
@@ -86,14 +86,16 @@ public class LoginActivity extends AppCompatActivity {
                     showLoginFailed(loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    LoggedInUserView userView = loginResult.getSuccess();
+                    TokenStorage.saveToken(getApplicationContext(), userView.getToken());
+                    updateUiWithUser(userView);
+
                     Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                     startActivity(intent);
-                }
-                setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
-                finish();
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
             }
         });
 
@@ -132,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                loginButton.setEnabled(false);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }

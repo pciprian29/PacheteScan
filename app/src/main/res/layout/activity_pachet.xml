@@ -10,7 +10,9 @@
         android:id="@+id/topToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary">
+        android:background="?attr/colorPrimary"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:navigationIconTint="@android:color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,7 +51,7 @@
             android:id="@+id/btnScanAwb"
             android:layout_width="300dp"
             android:layout_height="60dp"
-            android:text="Scaneaza AWB"
+            android:text="Detalii Pachet"
             android:textSize="30dp">
         </Button>
         <Space
