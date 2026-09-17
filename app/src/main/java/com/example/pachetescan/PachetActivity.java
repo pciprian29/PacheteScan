@@ -41,7 +41,7 @@ public class PachetActivity extends AppCompatActivity {
         });
 
         btnScanAwb.setOnClickListener(v -> {
-            Intent intent = new Intent(PachetActivity.this, ScanAwbActivity.class);
+            Intent intent = new Intent(PachetActivity.this, IntroducereAwbDetalii.class);
             startActivity(intent);
         });
 

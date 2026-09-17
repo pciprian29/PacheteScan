@@ -6,12 +6,18 @@ package com.example.pachetescan.ui.login;
 class LoggedInUserView {
     private String displayName;
     //... other data fields that may be accessible to the UI
+    private String token;
 
-    LoggedInUserView(String displayName) {
+    LoggedInUserView(String displayName, String token) {
         this.displayName = displayName;
+        this.token = token;
     }
 
-    String getDisplayName() {
+    public String getDisplayName() {
         return displayName;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

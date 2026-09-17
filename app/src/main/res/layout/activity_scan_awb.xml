@@ -10,17 +10,154 @@
         android:id="@+id/topToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary">
+        android:background="?attr/colorPrimary"
+        app:navigationIconTint="@android:color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/scanawb_title"
+            android:text="Adauga Imagine"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#80000000"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layoutCameraActive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFaPoza"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:text="c"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                app:cornerRadius="40dp"
+                app:backgroundTint="@android:color/white"
+                app:strokeColor="#4DFFFFFF"
+                app:strokeWidth="6dp"
+                app:elevation="4dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutPozaValidare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/btnRetakePoza"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="30dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:cornerRadius="30dp"
+                app:icon="@drawable/ic_undo"
+                app:iconSize="35dp"
+                app:iconTint="@android:color/white"
+                app:strokeColor="@android:color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirmaPoza"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:cornerRadius="40dp"
+                app:icon="@drawable/ic_check"
+                app:iconSize="45dp"
+                app:backgroundTint="#4CAF50"
+                app:iconTint="@android:color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/btnAnuleaza"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="30dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:cornerRadius="30dp"
+                app:icon="@drawable/ic_cancel"
+                app:iconSize="35dp"
+                app:iconTint="#FF5252"
+                app:strokeColor="#FF5252" />
+
+        </LinearLayout>
+
 </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
